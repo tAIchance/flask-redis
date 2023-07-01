@@ -4,13 +4,14 @@ jobs:
     Docker-Build-Push:
         runs-on: ubuntu-latest
         steps:
-            - name: Check out repository code
-              uses: actions/checkout@v2
-            - name: docker image build
-              run: docker build -t taidocker01/flask-redis:latest .
-            - name: list docker image
-              run: docker image ls
-            - name: dockerhub login
-              run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-            - name: push to dockerhub
-              run: docker image push taidocker01/flask-redis:latest
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        # Add support for more platforms with QEMU (optional)
+        # https://github.com/docker/setup-qemu-action
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
